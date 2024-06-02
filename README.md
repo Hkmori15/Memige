@@ -1,7 +1,7 @@
 # Memige
 It's telegram bot for posting memes ---> image/video
 ------------------------------------------------------
-                      RoadMap:
+  RoadMap:
 
  1. Find a hosting for bot
  2. Create telegram bot in bot father for token
