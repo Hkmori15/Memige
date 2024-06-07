@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError } = require('grammy');
 const bot = new Bot(process.env.BOT_API_KEY);
+const keep_alive = require('./keep_alive.js');
 
 bot.command('start', async (ctx) => {
     await ctx.reply('Привет, это тестовый запуск бота')
