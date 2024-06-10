@@ -9,6 +9,7 @@ It's telegram bot for feedback (send - video/photo/text/audio
  4. Make a simple code for start and test bot ✔
  5. Start make code for connect between bot and users admin ✔
                                 RoadMap done!
+    
                                 Bot function:
     1. Bots receive info (text/video/photo/audio) from users in dm and send info to the admin ☕
     2. Send link on my telegram channel ☕
