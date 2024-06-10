@@ -1,4 +1,5 @@
 require('dotenv').config();
+const keep_alive = require('.keep_alive.js');
 const { error } = require('console');
 const TelegramBot = require('node-telegram-bot-api');
 const cron = require('node-cron');
