@@ -1,7 +1,7 @@
 require('dotenv').config();
-const keep_alive = require('.keep_alive.js');
 const { error } = require('console');
 const TelegramBot = require('node-telegram-bot-api');
+const keep_alive = require('./keep_alive');
 const cron = require('node-cron');
 
 // Create a bot and get a token from FatherBot
