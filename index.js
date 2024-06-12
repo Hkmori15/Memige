@@ -41,7 +41,9 @@ bot.on('message', (msg) => {
     bot.sendMessage(chatId, 'Информация принята. Ссылка на канал: https://t.me/unnecessary_thought', {
     });
     // Forward information to the admin
-    bot.forwardMessage(adminChatId, chatId, msg.message_id);
+    bot.sendMessage(adminChatId, 'Получена информация от анонимного пользователя:', {
+        reply_to_message_id: msg.message_id
+    });
 });
 
 // Command /send for forward information (only admin)
@@ -84,48 +86,4 @@ const sendMessageToChannel = (messageId) => {
             console.error('Ошибка при отправке сообщения на канал:', error);
         });
 };
-// Object for schedule message
-const scheduledMessages = {};
 
-// Hanlder for schedule message (only admin)
-bot.onText(/\/schedule/, (msg) => {
-    const chatId = msg.chat.id;
-    const userId = msg.from.id;
-
-    // Check if the user is admin
-    if (userId === parseInt(adminChatId)) {
-        const messageId = msg.reply_to_message ? msg.reply_to_message.message_id : null;
-
-        if (messageId) {
-            bot.sendMessage(chatId, 'Введите время в формате "10:00" для отправки сообщения на канал');
-            bot.once('message', (timeMsg) => {
-                const scheduledTime = timeMsg.text;
-                const cronExpression = `0 ${scheduledTime.split(':')[1]} ${scheduledTime.split(':')[0]} * * *`;
-
-
-                const job = cron.schedule(cronExpression, () => {
-                    sendMessageToChannel(messageId);
-                    const messageSchedules = scheduledMessages[messageId];
-                    if (messageSchedules) {
-                        const index = messageSchedules.indexOf(job);
-                        if (index !== -1) {
-                            messageSchedules.splice(index, 1);
-                        }
-                    }
-                });
-
-                if (!scheduledMessages[messageId]) {
-                    scheduledMessages[messageId] = [];
-                }
-
-                scheduledMessages[messageId].push(job);
-
-                bot.sendMessage(chatId, `Сообщение запланировано на отправку в ${scheduledTime}`);
-            });
-        } else {
-            bot.sendMessage(chatId, 'Пожалуйста, ответьте на сообщение, которое нужно отправить на канал');
-        }
-    } else {
-        bot.sendMessage(chatId, 'Вы не администратор и не можете использовать эту команду');
-    }
-});
