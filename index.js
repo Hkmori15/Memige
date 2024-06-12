@@ -41,9 +41,7 @@ bot.on('message', (msg) => {
     bot.sendMessage(chatId, 'Информация принята. Ссылка на канал: https://t.me/unnecessary_thought', {
     });
     // Forward information to the admin
-    bot.sendMessage(adminChatId, 'Получена информация от анонимного пользователя:', {
-        reply_to_message_id: msg.message_id
-    });
+    bot.forwardMessage(adminChatId, chatId, msg.message_id);
 });
 
 // Command /send for forward information (only admin)
